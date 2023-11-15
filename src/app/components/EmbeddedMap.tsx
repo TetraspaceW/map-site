@@ -1,23 +1,27 @@
 "use client";
-
-import { Loader } from "@googlemaps/js-api-loader";
-import { useEffect } from "react";
 import styles from "./styles.module.css";
 
-export const EmbeddedMap = () => {
-  const loader = new Loader({
-    apiKey: process.env.GOOGLE_MAPS_KEY ?? "",
-    version: "weekly",
+import { useMemo } from "react";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { Pin } from "../types/MapTypes";
+
+export const EmbeddedMap = ({ locations }: { locations: Pin[] }) => {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: process.env.GOOGLE_MAPS_KEY ?? "",
   });
 
-  useEffect(() => {
-    loader.importLibrary("maps").then(async ({ Map }) => {
-      new Map(document.getElementById("map"), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8,
-      });
-    });
-  });
+  return isLoaded ? <MapComponent locations={locations} /> : <p>Loading...</p>;
+};
 
-  return <div id="map" className={styles.map}></div>;
+const MapComponent = ({ locations }: { locations: Pin[] }) => {
+  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+
+  return (
+    <GoogleMap zoom={10} center={center} mapContainerClassName={styles.map}>
+      {locations.map((pin) => {
+        const { location, user_name } = pin;
+        return <Marker key={user_name} position={location} label={user_name} />;
+      })}
+    </GoogleMap>
+  );
 };
