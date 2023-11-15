@@ -14,10 +14,10 @@ export const EmbeddedMap = ({ locations }: { locations: Pin[] }) => {
 };
 
 const MapComponent = ({ locations }: { locations: Pin[] }) => {
-  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+  const center = useMemo(() => ({ lat: 0, lng: 0 }), []);
 
   return (
-    <GoogleMap zoom={10} center={center} mapContainerClassName={styles.map}>
+    <GoogleMap zoom={1} center={center} mapContainerClassName={styles.map}>
       {locations.map((pin) => {
         const { location, user_name } = pin;
         return <Marker key={user_name} position={location} label={user_name} />;
