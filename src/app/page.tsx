@@ -6,18 +6,7 @@ import { Pin } from "./types/MapTypes";
 export default async function Home() {
   // i know i know
   // fixing it later
-  const locations: Pin[] = (await (await GET()).json()).locations.map(
-    ({
-      location: { lat, lng },
-      user_name,
-    }: {
-      location: { lat: string; lng: string };
-      user_name: string;
-    }) => ({
-      location: { lat: Number(lat), lng: Number(lng) },
-      user_name,
-    })
-  );
+  const locations: Pin[] = (await (await GET()).json()).locations;
 
   return (
     <main className={styles.main}>

@@ -12,9 +12,19 @@ export async function GET() {
       return new Response(JSON.stringify(error), { status: 500 });
     }
 
+    const cleaned_locations = locations.map(clean);
+
     return Response.json({
-      locations,
+      locations: cleaned_locations,
     });
   }
   return new Response("SUPABASE_ENDPOINT not set.", { status: 500 });
 }
+
+const clean = (pin: any) => {
+  const { location, user_name } = pin;
+  return {
+    user_name: `${user_name}`,
+    location: { lat: Number(location.lat), lng: Number(location.lng) },
+  };
+};
