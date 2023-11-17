@@ -4,6 +4,8 @@ import { useMemo } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { Pin } from "../types/MapTypes";
 import { LoadingSkeleton } from "./LoadingSkeleton";
+import { ErrorMessage } from "./ErrorMessage";
+import { AppError } from "../types/ErrorTypes";
 
 export const EmbeddedMap = ({
   locations,
@@ -12,9 +14,11 @@ export const EmbeddedMap = ({
   locations: Pin[];
   locationsLoaded: boolean;
 }) => {
-  const { isLoaded: mapLoaded } = useLoadScript({
+  const { isLoaded: mapLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_KEY ?? "",
   });
+
+  if (loadError) return <ErrorMessage message={AppError.MapLoadingError} />;
 
   return mapLoaded && locationsLoaded ? (
     <MapComponent locations={locations} />

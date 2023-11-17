@@ -4,6 +4,8 @@ import styles from "./page.module.css";
 import { EmbeddedMap } from "./components/EmbeddedMap";
 
 import useSWR from "swr";
+import { ErrorMessage } from "./components/ErrorMessage";
+import { AppError } from "./types/ErrorTypes";
 
 const fetcher = (...args: any) => fetch(args).then((res) => res.json());
 
@@ -13,7 +15,11 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <EmbeddedMap locations={locations} locationsLoaded={!isLoading} />
+      {error ? (
+        <ErrorMessage message={AppError.LocationFetchError} />
+      ) : (
+        <EmbeddedMap locations={locations} locationsLoaded={!isLoading} />
+      )}
     </main>
   );
 }

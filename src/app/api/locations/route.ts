@@ -1,6 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
+import mockLocationResponse from "../mocks/mockLocationResponse.json";
 
 export async function GET() {
+  if (process.env.USE_MOCKS) {
+    return Response.json(mockLocationResponse);
+  }
+
   const { SUPABASE_ENDPOINT, SUPABASE_TOKEN } = process.env;
   if (SUPABASE_ENDPOINT && SUPABASE_TOKEN) {
     const client = createClient(SUPABASE_ENDPOINT, SUPABASE_TOKEN);

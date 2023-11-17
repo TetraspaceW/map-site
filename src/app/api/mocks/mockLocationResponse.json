@@ -1,0 +1,18 @@
+{
+    "locations": [
+        {
+            "user_name": "tetraspace",
+            "location": {
+                "lat": 51.4596965,
+                "lng": -0.4473622
+            }
+        },
+        {
+            "user_name": "zye cetacean",
+            "location": {
+                "lat": 0,
+                "lng": 0
+            }
+        }
+    ]
+}
