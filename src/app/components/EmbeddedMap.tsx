@@ -1,16 +1,26 @@
-"use client";
 import styles from "./styles.module.css";
 
 import { useMemo } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import { Pin } from "../types/MapTypes";
+import { LoadingSkeleton } from "./LoadingSkeleton";
 
-export const EmbeddedMap = ({ locations }: { locations: Pin[] }) => {
-  const { isLoaded } = useLoadScript({
+export const EmbeddedMap = ({
+  locations,
+  locationsLoaded = true,
+}: {
+  locations: Pin[];
+  locationsLoaded: boolean;
+}) => {
+  const { isLoaded: mapLoaded } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_KEY ?? "",
   });
 
-  return isLoaded ? <MapComponent locations={locations} /> : <p>Loading...</p>;
+  return mapLoaded && locationsLoaded ? (
+    <MapComponent locations={locations} />
+  ) : (
+    <LoadingSkeleton />
+  );
 };
 
 const MapComponent = ({ locations }: { locations: Pin[] }) => {
