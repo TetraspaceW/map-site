@@ -1,5 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import mockLocationResponse from "../mocks/mockLocationResponse.json";
+import { getFlight } from "../flight/route";
+import { Pin } from "@/app/types/MapTypes";
 
 export async function GET() {
   if (process.env.USE_MOCKS) {
@@ -17,19 +19,35 @@ export async function GET() {
       return new Response(JSON.stringify(error), { status: 500 });
     }
 
-    const cleaned_locations = locations.map(clean);
+    const output: Pin[] = await Promise.all(
+      locations.map(async ({ location, user_name }) => {
+        if (location.Flight) {
+          const flight = await getFlight(location.Flight.id);
+          const { lat, lng } = (await flight.json()).response;
+          return {
+            user_name,
+            location: coordinatesToString({ lat, lng }),
+            type: "flight",
+          };
+        } else {
+          const { lat, lng } = location.Coordinates;
+          return {
+            user_name,
+            location: coordinatesToString({ lat, lng }),
+            type: "coordinates",
+          };
+        }
+      })
+    );
 
     return Response.json({
-      locations: cleaned_locations,
+      locations: output,
     });
   }
   return new Response("SUPABASE_ENDPOINT not set.", { status: 500 });
 }
 
-const clean = (pin: any) => {
-  const { location, user_name } = pin;
-  return {
-    user_name: `${user_name}`,
-    location: { lat: Number(location.lat), lng: Number(location.lng) },
-  };
-};
+const coordinatesToString = ({ lat, lng }: { lat: string; lng: string }) => ({
+  lat: Number(lat),
+  lng: Number(lng),
+});

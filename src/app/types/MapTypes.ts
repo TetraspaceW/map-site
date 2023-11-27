@@ -4,4 +4,5 @@ export type Pin = {
     lng: number;
   };
   user_name: string;
+  type: "flight" | "coordinates";
 };
