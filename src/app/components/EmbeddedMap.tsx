@@ -16,7 +16,7 @@ export const EmbeddedMap = ({
   loaded: boolean;
 }) => {
   return loaded ? (
-    <MapComponent nodes={nodes} airports={airports} routes={routes}/>
+    <MapComponent nodes={nodes} airports={airports} routes={routes} />
   ) : (
     <LoadingSkeleton />
   );
@@ -25,17 +25,21 @@ export const EmbeddedMap = ({
 const MapComponent = ({
   nodes,
   airports,
-  routes
+  routes,
 }: {
   nodes: Node[];
   airports: Airport[];
-  routes: Route[]
+  routes: Route[];
 }) => {
-  const graphLinks = nodes.map((node) => {
-    return { source: node.user_id, target: node.nearest_airport };
-  }).concat(routes.map((route) => {
-    return { source: route.start, target: route.end }
-  }));
+  const graphLinks = nodes
+    .map((node) => {
+      return { source: node.user_id, target: node.nearest_airport };
+    })
+    .concat(
+      routes.map((route) => {
+        return { source: route.start, target: route.end };
+      })
+    );
 
   const graphNodes = nodes
     .map((node) => {

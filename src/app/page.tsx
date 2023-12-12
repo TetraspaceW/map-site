@@ -24,7 +24,7 @@ export default function Home() {
     data: routeData,
     error: routeError,
     isLoading: routeIsLoading,
-  } = useSWR("api/airports", fetcher);
+  } = useSWR("api/routes", fetcher);
   // TODO: this is starting to get a bit embarrasing, why is it repeated thrice
   const nodes = locationData?.locations ?? [];
   const airports = airportData?.airports ?? [];
