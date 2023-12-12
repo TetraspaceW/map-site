@@ -1,5 +1,3 @@
-import styles from "./styles.module.css";
-
 import { Node, Airport, Route } from "../types/MapTypes";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { ForceGraph2D } from "react-force-graph";
@@ -48,7 +46,7 @@ const MapComponent = ({
         name: node.user_name,
         color: "#aa00aa",
         type: "node",
-        val: 1,
+        val: 2,
       };
     })
     .concat(
@@ -73,7 +71,7 @@ const MapComponent = ({
         if (node.x && node.y) {
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          ctx.font = `${node.val * 4}px Sans-Serif`;
+          ctx.font = `${node.val * 2}px Sans-Serif`;
           ctx.fillStyle = "black";
           ctx.fillText(node.name, node.x, node.y);
         }
