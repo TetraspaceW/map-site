@@ -12,4 +12,5 @@ export type Airport = {
 export type Route = {
   start: string;
   end: string;
+  length: number;
 };

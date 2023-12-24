@@ -1,6 +1,7 @@
+import { useEffect, useRef } from "react";
 import { Node, Airport, Route } from "../types/MapTypes";
 import { LoadingSkeleton } from "./LoadingSkeleton";
-import { ForceGraph2D } from "react-force-graph";
+import ForceGraph2D, { ForceGraphMethods } from "react-force-graph-2d";
 
 export const EmbeddedMap = ({
   nodes,
@@ -29,6 +30,18 @@ const MapComponent = ({
   airports: Airport[];
   routes: Route[];
 }) => {
+  const fgRef = useRef<ForceGraphMethods>();
+
+  useEffect(() => {
+    fgRef.current?.d3Force("link")?.distance((link: any) => {
+      const relevantRoute = routes.find(
+        (route) =>
+          route.start === link.source.id && route.end === link.target.id
+      );
+      return relevantRoute?.length || 20;
+    });
+  });
+
   const graphLinks = nodes
     .map((node) => {
       return { source: node.user_id, target: node.nearest_airport };
@@ -67,7 +80,8 @@ const MapComponent = ({
         nodes: graphNodes,
         links: graphLinks,
       }}
-      nodeCanvasObject={(node, ctx, globalScale) => {
+      ref={fgRef}
+      nodeCanvasObject={(node, ctx, _) => {
         if (node.x && node.y) {
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";

@@ -7,7 +7,7 @@ export async function GET() {
 
     const { data: routes, error } = await client
       .from("route")
-      .select("start,end");
+      .select("start,end,length");
 
     if (error) {
       return new Response(JSON.stringify(error), { status: 500 });
