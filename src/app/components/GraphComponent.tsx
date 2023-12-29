@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Node, Airport, Route } from "../types/MapTypes";
-import ForceGraph2D, { ForceGraphMethods } from "react-force-graph-2d";
+import ForceGraph3D, { ForceGraphMethods } from "react-force-graph-3d";
 
 export const GraphComponent = ({
   nodes,
@@ -56,22 +56,12 @@ export const GraphComponent = ({
     );
 
   return (
-    <ForceGraph2D
+    <ForceGraph3D
       graphData={{
         nodes: graphNodes,
         links: graphLinks,
       }}
       ref={fgRef}
-      nodeCanvasObject={(node, ctx, _) => {
-        if (node.x && node.y) {
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.font = `${node.val * 2}px Sans-Serif`;
-          ctx.fillStyle = "black";
-          ctx.fillText(node.name, node.x, node.y);
-        }
-      }}
-      nodeCanvasObjectMode={() => "after"}
     />
   );
 };
