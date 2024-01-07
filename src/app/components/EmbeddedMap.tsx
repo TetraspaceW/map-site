@@ -1,6 +1,7 @@
 import { Node, Airport, Route } from "../types/MapTypes";
 import { LoadingSkeleton } from "./LoadingSkeleton";
-import { GraphComponent } from "./GraphComponent";
+// import { GraphComponent } from "./GraphComponent";
+import { MapComponent } from "./MapComponent";
 
 export const EmbeddedMap = ({
   nodes,
@@ -14,8 +15,9 @@ export const EmbeddedMap = ({
   loaded: boolean;
 }) => {
   return loaded ? (
-    <GraphComponent nodes={nodes} airports={airports} routes={routes} />
+    <MapComponent nodes={nodes} />
   ) : (
+    // <GraphComponent nodes={nodes} airports={airports} routes={routes} />
     <LoadingSkeleton />
   );
 };

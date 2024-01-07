@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
-import { Node, Airport, Route } from "../types/MapTypes";
 import ForceGraph3D, { ForceGraphMethods } from "react-force-graph-3d";
+
+import { Node, Airport, Route } from "../types/MapTypes";
 
 export const GraphComponent = ({
   nodes,

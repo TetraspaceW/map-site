@@ -1,13 +1,20 @@
 "use client";
 
-import styles from "./page.module.css";
-import { EmbeddedMap } from "./components/EmbeddedMap";
-
 import useSWR from "swr";
+
+import { EmbeddedMap } from "./components/EmbeddedMap";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { AppError } from "./types/ErrorTypes";
+import { Header } from "./components/Header";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import styles from "./page.module.css";
+
+const accessToken = "";
+const refreshToken = "";
+const fetcher = (url: string) =>
+  fetch(url, {
+    headers: { access_token: accessToken, refresh_token: refreshToken },
+  }).then((res) => res.json());
 
 export default function Home() {
   const useMultipleApiData = (endpoints: string[]) => {
@@ -37,6 +44,7 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
+      <Header />
       {error ? (
         <ErrorMessage message={AppError.LocationFetchError} />
       ) : (

@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+
 import mockLocationResponse from "../mocks/mockLocationResponse.json";
 
 export async function GET() {
@@ -11,7 +12,7 @@ export async function GET() {
     const client = createClient(SUPABASE_ENDPOINT, SUPABASE_TOKEN);
     const { data: locations, error } = await client
       .from("location")
-      .select("user_id,user_name,nearest_airport");
+      .select("user_id,user_name,nearest_airport,location");
 
     if (error) {
       return new Response(JSON.stringify(error), { status: 500 });
