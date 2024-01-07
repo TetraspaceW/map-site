@@ -3,7 +3,7 @@
 import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
 
-import { EmbeddedMap } from "./components/EmbeddedMap";
+import { EmbeddedMap, EmbeddedMapDisplay } from "./components/EmbeddedMap";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { AppError } from "./types/ErrorTypes";
 import { Header } from "./components/Header";
@@ -34,7 +34,7 @@ const useMultipleApiData = (endpoints: string[]) => {
 
 const Home = () => {
   const searchParams = useSearchParams();
-  const display = searchParams.get("display") ?? "map";
+  const display = (searchParams.get("display") ?? "map") as EmbeddedMapDisplay;
 
   const {
     data: [locationData, airportData, routeData],
@@ -48,7 +48,6 @@ const Home = () => {
 
   return (
     <main className={styles.main}>
-      <Header />
       {error ? (
         <ErrorMessage message={AppError.LocationFetchError} />
       ) : (

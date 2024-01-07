@@ -1,9 +1,10 @@
 import { Node, Airport, Route } from "../types/MapTypes";
 import { GraphComponent } from "./GraphComponent";
+import { Header } from "./Header";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { MapComponent } from "./MapComponent";
 
-type EmbeddedMapDisplay = "map" | "graph3d";
+export type EmbeddedMapDisplay = "map" | "graph3d";
 
 export const EmbeddedMap = ({
   nodes,
@@ -18,14 +19,26 @@ export const EmbeddedMap = ({
   loaded: boolean;
   display: EmbeddedMapDisplay;
 }) => {
-  return loaded ? (
-    {
-      map: <MapComponent nodes={nodes} />,
-      graph3d: (
-        <GraphComponent nodes={nodes} airports={airports} routes={routes} />
-      ),
-    }[display]
-  ) : (
-    <LoadingSkeleton />
+  var mapComponent = <LoadingSkeleton />;
+  if (!loaded) {
+    mapComponent = <LoadingSkeleton />;
+  } else {
+    switch (display) {
+      case "map":
+        mapComponent = <MapComponent nodes={nodes} />;
+        break;
+      case "graph3d":
+        mapComponent = (
+          <GraphComponent nodes={nodes} airports={airports} routes={routes} />
+        );
+        break;
+    }
+  }
+
+  return (
+    <>
+      <Header />
+      {mapComponent}
+    </>
   );
 };

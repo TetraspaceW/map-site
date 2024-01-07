@@ -33,6 +33,7 @@ jobs:
           touch .env
           echo SUPABASE_ENDPOINT=${{ secrets.SUPABASE_ENDPOINT }} >> .env
           echo SUPABASE_TOKEN=${{ secrets.SUPABASE_TOKEN }} >> .env
+          echo SUPABASE_ANON_TOKEN=${{ secrets.SUPABASE_ANON_TOKEN }} >> .env
           echo GOOGLE_MAPS_KEY=${{ secrets.GOOGLE_MAPS_KEY }} >> .env
       - name: Detect package manager
         id: detect-package-manager

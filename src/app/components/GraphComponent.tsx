@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import ForceGraph3D, { ForceGraphMethods } from "react-force-graph-3d";
 
@@ -12,6 +14,8 @@ export const GraphComponent = ({
   airports: Airport[];
   routes: Route[];
 }) => {
+  console.log("GOOGLE MAPS API KEY ", process.env.GOOGLE_MAPS_KEY);
+
   const fgRef = useRef<ForceGraphMethods>();
 
   useEffect(() => {

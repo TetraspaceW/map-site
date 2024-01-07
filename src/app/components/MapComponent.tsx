@@ -10,7 +10,7 @@ export const MapComponent = ({ nodes }: { nodes: Node[] }) => {
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_KEY ?? ""}>
-      <Map zoom={1} center={center} mapContainerClassName={styles.map}>
+      <Map zoom={1} center={center} className={styles.map}>
         {nodes.map((node) => {
           const { location, user_name } = node;
           return (
