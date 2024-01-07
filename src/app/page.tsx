@@ -1,6 +1,7 @@
 "use client";
 
 import useSWR from "swr";
+import { useSearchParams } from "next/navigation";
 
 import { EmbeddedMap } from "./components/EmbeddedMap";
 import { ErrorMessage } from "./components/ErrorMessage";
@@ -16,21 +17,24 @@ const fetcher = (url: string) =>
     headers: { access_token: accessToken, refresh_token: refreshToken },
   }).then((res) => res.json());
 
-export default function Home() {
-  const useMultipleApiData = (endpoints: string[]) => {
-    const useApiData = (endpoint: string) => useSWR(endpoint, fetcher);
-    const response = endpoints.map(useApiData);
-    return response.reduce(
-      (acc, curr) => {
-        return {
-          data: [...acc.data, curr.data],
-          error: acc.error || curr.error,
-          isLoading: acc.isLoading || curr.isLoading,
-        };
-      },
-      { data: [] as any[], error: null as any, isLoading: false }
-    );
-  };
+const useMultipleApiData = (endpoints: string[]) => {
+  const useApiData = (endpoint: string) => useSWR(endpoint, fetcher);
+  const response = endpoints.map(useApiData);
+  return response.reduce(
+    (acc, curr) => {
+      return {
+        data: [...acc.data, curr.data],
+        error: acc.error || curr.error,
+        isLoading: acc.isLoading || curr.isLoading,
+      };
+    },
+    { data: [] as any[], error: null as any, isLoading: false }
+  );
+};
+
+const Home = () => {
+  const searchParams = useSearchParams();
+  const display = searchParams.get("display") ?? "map";
 
   const {
     data: [locationData, airportData, routeData],
@@ -53,8 +57,11 @@ export default function Home() {
           airports={airports}
           routes={routes}
           loaded={!isLoading}
+          display={display}
         />
       )}
     </main>
   );
-}
+};
+
+export default Home;
