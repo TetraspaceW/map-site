@@ -1,8 +1,10 @@
+import React from "react";
 import { Node, Airport, Route } from "../types/MapTypes";
-import { GraphComponent } from "./GraphComponent";
 import { Header } from "./Header";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { MapComponent } from "./MapComponent";
+
+const GraphComponent = React.lazy(() => import("./GraphComponent"));
 
 export type EmbeddedMapDisplay = "map" | "graph3d";
 

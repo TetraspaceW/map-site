@@ -1,9 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-type HeaderProps = {
-  SUPABASE_ENDPOINT?: string;
-  SUPABASE_ANON_TOKEN?: string;
-};
+type HeaderProps = {};
 
 const loginWithDiscord = async (
   supabaseEndpoint: string,
@@ -16,32 +13,15 @@ const loginWithDiscord = async (
   });
 };
 
-export async function getStaticProps() {
-  const { SUPABASE_ENDPOINT, SUPABASE_ANON_TOKEN } = process.env;
-
-  console.log("Endpoint: ", SUPABASE_ENDPOINT);
-  console.log("Token:", SUPABASE_ANON_TOKEN);
-
-  return {
-    props: {
-      SUPABASE_ENDPOINT,
-      SUPABASE_ANON_TOKEN,
-    },
-  };
-}
-
-export const Header = ({
-  SUPABASE_ENDPOINT,
-  SUPABASE_ANON_TOKEN,
-}: HeaderProps) => {
-  console.log("Endpoint in Header: ", SUPABASE_ENDPOINT);
-  console.log("Token in Header:", SUPABASE_ANON_TOKEN);
-
+export const Header = ({}: HeaderProps) => {
   return (
     <div>
       <button
         onClick={() =>
-          loginWithDiscord(SUPABASE_ENDPOINT ?? "", SUPABASE_ANON_TOKEN ?? "")
+          loginWithDiscord(
+            process.env.SUPABASE_ENDPOINT ?? "",
+            process.env.SUPABASE_ANON_TOKEN ?? ""
+          )
         }
       >
         Login

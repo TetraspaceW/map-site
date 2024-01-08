@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 import { EmbeddedMap, EmbeddedMapDisplay } from "./components/EmbeddedMap";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { AppError } from "./types/ErrorTypes";
-import { Header } from "./components/Header";
 
 import styles from "./page.module.css";
 

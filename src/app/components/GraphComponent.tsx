@@ -1,11 +1,9 @@
-"use client";
-
 import { useEffect, useRef } from "react";
 import ForceGraph3D, { ForceGraphMethods } from "react-force-graph-3d";
 
 import { Node, Airport, Route } from "../types/MapTypes";
 
-export const GraphComponent = ({
+const GraphComponent = ({
   nodes,
   airports,
   routes,
@@ -70,3 +68,5 @@ export const GraphComponent = ({
     />
   );
 };
+
+export default GraphComponent;
