@@ -7,7 +7,7 @@ export async function GET() {
 
     const { data: airports, error } = await client
       .from("airport")
-      .select("code,name");
+      .select("code,name,location");
 
     if (error) {
       return new Response(JSON.stringify(error), { status: 500 });

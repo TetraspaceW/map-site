@@ -3,6 +3,7 @@ import { Node, Airport, Route } from "../types/MapTypes";
 import { Header } from "./Header";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { MapComponent } from "./MapComponent";
+import { APIProviderContext } from "@vis.gl/react-google-maps";
 
 const GraphComponent = React.lazy(() => import("./GraphComponent"));
 
@@ -27,7 +28,9 @@ export const EmbeddedMap = ({
   } else {
     switch (display) {
       case "map":
-        mapComponent = <MapComponent nodes={nodes} />;
+        mapComponent = (
+          <MapComponent nodes={nodes} airports={airports} routes={routes} />
+        );
         break;
       case "graph3d":
         mapComponent = (
