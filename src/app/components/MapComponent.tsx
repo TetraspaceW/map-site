@@ -6,16 +6,16 @@ import {
   useMap,
   useMapsLibrary,
 } from "@vis.gl/react-google-maps";
-import { SetStateAction, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { Node, Airport, Route } from "../types/MapTypes";
+import { Node, Airport, PlaneRoute } from "../types/MapTypes";
 
 import styles from "./styles.module.css";
 
 type MapComponentProps = {
   nodes: Node[];
   airports: Airport[];
-  routes: Route[];
+  routes: PlaneRoute[];
 };
 
 export const MapComponent = (props: MapComponentProps) => {
@@ -83,7 +83,7 @@ const GoogleMap = ({ nodes, airports, routes }: MapComponentProps) => {
       disableDefaultUI={true}
     >
       {airports.map((airport) => {
-        const { location, name, code } = airport;
+        const { location, code } = airport;
         return (
           <AdvancedMarker
             key={code}

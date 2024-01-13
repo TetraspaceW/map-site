@@ -11,7 +11,7 @@ export type Airport = {
   location: NodeLocation;
 };
 
-export type Route = {
+export type PlaneRoute = {
   start: string;
   end: string;
   length: number;

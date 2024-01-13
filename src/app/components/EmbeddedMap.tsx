@@ -1,9 +1,8 @@
 import React from "react";
-import { Node, Airport, Route } from "../types/MapTypes";
+import { Node, Airport, PlaneRoute } from "../types/MapTypes";
 import { Header } from "./Header";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { MapComponent } from "./MapComponent";
-import { APIProviderContext } from "@vis.gl/react-google-maps";
 
 const GraphComponent = React.lazy(() => import("./GraphComponent"));
 
@@ -18,7 +17,7 @@ export const EmbeddedMap = ({
 }: {
   nodes: Node[];
   airports: Airport[];
-  routes: Route[];
+  routes: PlaneRoute[];
   loaded: boolean;
   display: EmbeddedMapDisplay;
 }) => {

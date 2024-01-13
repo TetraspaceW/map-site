@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import ForceGraph3D, { ForceGraphMethods } from "react-force-graph-3d";
 
-import { Node, Airport, Route } from "../types/MapTypes";
+import { Node, Airport, PlaneRoute } from "../types/MapTypes";
 
 const GraphComponent = ({
   nodes,
@@ -10,7 +10,7 @@ const GraphComponent = ({
 }: {
   nodes: Node[];
   airports: Airport[];
-  routes: Route[];
+  routes: PlaneRoute[];
 }) => {
   console.log("GOOGLE MAPS API KEY ", process.env.GOOGLE_MAPS_KEY);
 

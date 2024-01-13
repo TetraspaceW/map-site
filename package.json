@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aeolun/dijkstra-calculator": "^1.4.0",
     "@supabase/supabase-js": "^2.38.4",
     "@vis.gl/react-google-maps": "^0.4.2",
     "next": "14.0.2",

@@ -10,4 +10,8 @@
 .airportmarker {
   font-size: 1rem;
   color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  text-shadow: 0 0 2px black;
+  font-weight: 900;
 }
