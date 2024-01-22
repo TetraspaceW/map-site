@@ -17,7 +17,7 @@ export type PlaneRoute = {
   length: number;
 };
 
-type NodeLocation = {
+export type NodeLocation = {
   lat: number;
   lng: number;
 };

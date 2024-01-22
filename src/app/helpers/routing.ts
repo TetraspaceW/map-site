@@ -1,11 +1,7 @@
 import { PlaneRoute } from "../types/MapTypes";
 import { DijkstraCalculator } from "@aeolun/dijkstra-calculator";
 
-export const getShortestPathBetween = (
-  routes: PlaneRoute[],
-  from: string,
-  to: string
-) => {
+const generateDijkstraGraph = (routes: PlaneRoute[]) => {
   const graph = new DijkstraCalculator();
 
   // find unique airports
@@ -27,8 +23,19 @@ export const getShortestPathBetween = (
     graph.addEdge(route.start, route.end, { weight: route.length });
   });
 
+  return graph;
+};
+
+export const getShortestPathBetween = (
+  routes: PlaneRoute[],
+  from: string,
+  to: string
+) => {
+  const graph = generateDijkstraGraph(routes);
   return graph.calculateShortestPath(from, to).finalPath;
 };
 
 // TODO: memoize the dijkstra calculator graph, we should only compute that once probably
 // idk maybe its cheap
+
+export const routeGirlthing = (closestAirport: string, to: string) => {};
