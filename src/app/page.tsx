@@ -1,6 +1,4 @@
 "use client";
-
-import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
 
 import { EmbeddedMap, EmbeddedMapDisplay } from "./components/EmbeddedMap";
@@ -8,22 +6,7 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { AppError } from "./types/ErrorTypes";
 
 import styles from "./page.module.css";
-import { fetcher } from "./helpers/fetcher";
-
-const useMultipleApiData = (endpoints: string[]) => {
-  const useApiData = (endpoint: string) => useSWR(endpoint, fetcher("", ""));
-  const response = endpoints.map(useApiData);
-  return response.reduce(
-    (acc, curr) => {
-      return {
-        data: [...acc.data, curr.data],
-        error: acc.error || curr.error,
-        isLoading: acc.isLoading || curr.isLoading,
-      };
-    },
-    { data: [] as any[], error: null as any, isLoading: false }
-  );
-};
+import { useMultipleApiData } from "./helpers/useMultipleAPIData";
 
 const Home = () => {
   const searchParams = useSearchParams();
@@ -33,7 +16,10 @@ const Home = () => {
     data: [locationData, airportData, routeData],
     error,
     isLoading,
-  } = useMultipleApiData(["/api/locations", "/api/airports", "/api/routes"]);
+  } = useMultipleApiData(
+    "",
+    ""
+  )(["/api/locations", "/api/airports", "/api/routes"]);
 
   const nodes = locationData?.locations ?? [];
   const airports = airportData?.airports ?? [];
