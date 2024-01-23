@@ -1,10 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
+import { withSupabaseClient } from "../helpers";
 
 export async function GET() {
-  const { SUPABASE_ENDPOINT, SUPABASE_TOKEN } = process.env;
-  if (SUPABASE_ENDPOINT && SUPABASE_TOKEN) {
-    const client = createClient(SUPABASE_ENDPOINT, SUPABASE_TOKEN);
-
+  return await withSupabaseClient(async (client) => {
     const { data: airports, error } = await client
       .from("airport")
       .select("code,name,location");
@@ -14,6 +11,5 @@ export async function GET() {
     }
 
     return Response.json({ airports });
-  }
-  return new Response("SUPABASE_ENDPOINT not set.", { status: 500 });
+  });
 }

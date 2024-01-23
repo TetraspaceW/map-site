@@ -8,16 +8,10 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { AppError } from "./types/ErrorTypes";
 
 import styles from "./page.module.css";
-
-const accessToken = "";
-const refreshToken = "";
-const fetcher = (url: string) =>
-  fetch(url, {
-    headers: { access_token: accessToken, refresh_token: refreshToken },
-  }).then((res) => res.json());
+import { fetcher } from "./helpers/fetcher";
 
 const useMultipleApiData = (endpoints: string[]) => {
-  const useApiData = (endpoint: string) => useSWR(endpoint, fetcher);
+  const useApiData = (endpoint: string) => useSWR(endpoint, fetcher("", ""));
   const response = endpoints.map(useApiData);
   return response.reduce(
     (acc, curr) => {
