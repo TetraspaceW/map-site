@@ -5,47 +5,47 @@ import { Airport, Node } from "@/app/types/MapTypes";
 import Link from "next/link";
 import { useMultipleApiData } from "@/app/helpers/useMultipleAPIData";
 
-type Girlthing = Node & { distance: number };
+type Operative = Node & { distance: number };
 
-type GirlthingsResponse = {
-  nodesAtNearestAirport: Girlthing[];
-  nodesAwayFromNearestAirport: Girlthing[];
+type OperativesResponse = {
+  nodesAtNearestAirport: Operative[];
+  nodesAwayFromNearestAirport: Operative[];
 };
 
-const GirlthingsList = ({
-  girlthings,
+const OperativesList = ({
+  operatives,
   ListItem,
 }: {
-  girlthings: Girlthing[];
-  ListItem: ({ girlthing }: { girlthing: Girlthing }) => JSX.Element;
+  operatives: Operative[];
+  ListItem: ({ operative }: { operative: Operative }) => JSX.Element;
 }) => {
   return (
     <ul>
-      {girlthings.map((girlthing) => (
-        <ListItem key={girlthing.user_id} girlthing={girlthing} />
+      {operatives.map((operative) => (
+        <ListItem key={operative.user_id} operative={operative} />
       ))}
     </ul>
   );
 };
 
-const GirlthingEntry = ({
-  girlthing,
+const OperativeEntry = ({
+  operative,
   isNear,
 }: {
-  girlthing: Girlthing;
+  operative: Operative;
   isNear: boolean;
 }) => {
   return (
     <li>
       {isNear ? (
         <p>
-          {girlthing.user_name} ({girlthing.distance.toFixed(0)} miles away){" "}
+          {operative.user_name} ({operative.distance.toFixed(0)} miles away){" "}
         </p>
       ) : (
         <p>
-          {girlthing.user_name} (closer to{" "}
-          <Link href={`/airport/${girlthing.nearest_airport}`}>
-            {girlthing.nearest_airport}
+          {operative.user_name} (closer to{" "}
+          <Link href={`/airport/${operative.nearest_airport}`}>
+            {operative.nearest_airport}
           </Link>
           )
         </p>
@@ -56,7 +56,7 @@ const GirlthingEntry = ({
 
 export default function Airport({ params }: { params: { code: string } }) {
   const {
-    data: [girlthingData, airportData],
+    data: [operativeData, airportData],
     error,
     isLoading,
   } = useMultipleApiData(
@@ -64,11 +64,11 @@ export default function Airport({ params }: { params: { code: string } }) {
     ""
   )([`/api/locations/airport/${params.code}`, `/api/airports/${params.code}`]);
 
-  const girlthings: GirlthingsResponse = girlthingData;
+  const operatives: OperativesResponse = operativeData;
   const airport: Airport = airportData?.airport;
 
   const { nodesAtNearestAirport, nodesAwayFromNearestAirport } =
-    girlthings || {};
+    operatives || {};
 
   if (isLoading) {
     return (
@@ -94,19 +94,19 @@ export default function Airport({ params }: { params: { code: string } }) {
       </p>
       {nodesAtNearestAirport && (
         <>
-          <h2>Girlthings Near {airport.name}</h2>
-          <GirlthingsList
-            girlthings={nodesAtNearestAirport}
-            ListItem={(props) => <GirlthingEntry {...props} isNear />}
+          <h2>Operatives Near {airport.name}</h2>
+          <OperativesList
+            operatives={nodesAtNearestAirport}
+            ListItem={(props) => <OperativeEntry {...props} isNear />}
           />
         </>
       )}
       {nodesAwayFromNearestAirport && (
         <>
-          <h2>Other Girlthings</h2>
-          <GirlthingsList
-            girlthings={nodesAwayFromNearestAirport}
-            ListItem={(props) => <GirlthingEntry {...props} isNear={false} />}
+          <h2>Other Operatives</h2>
+          <OperativesList
+            operatives={nodesAwayFromNearestAirport}
+            ListItem={(props) => <OperativeEntry {...props} isNear={false} />}
           />
         </>
       )}
